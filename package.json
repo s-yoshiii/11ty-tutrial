@@ -1,0 +1,17 @@
+{
+  "name": "11ty-tutrial",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vite": "^4.3.8",
+    "vite-plugin-eleventy": "^0.3.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "sass": "^1.62.1"
+  }
+}
