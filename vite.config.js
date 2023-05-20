@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import { eleventyPlugin } from "vite-plugin-eleventy";
+const glob = require("glob");
+const entries = glob.sync("./src/**/*.scss");
+console.log(entries);
 export default defineConfig({
   root: "src",
   publicDir: resolve(__dirname, "public"),
@@ -22,7 +25,6 @@ export default defineConfig({
         chunkFileNames: "assets/js/[name].js",
         entryFileNames: "assets/js/[name].js",
         assetFileNames: (assetInfo) => {
-          console.log(assetInfo);
           let extType = assetInfo.name.split(".")[1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = "images";
