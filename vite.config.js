@@ -16,28 +16,28 @@ export default defineConfig({
   build: {
     outDir: "../build",
     emptyOutDir: false,
-    rollupOptions: {
-      input: {
-        about: "./src/common/css/html.scss",
-        ejs: "./src/common/css/ejs.scss",
-      },
-      output: {
-        chunkFileNames: "assets/js/[name].js",
-        entryFileNames: "assets/js/[name].js",
-        assetFileNames: (assetInfo) => {
-          let extType = assetInfo.name.split(".")[1];
-          console.log(assetInfo.name);
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            extType = "images";
-          } else if (/woff|woff2|eot|ttf/.test(extType)) {
-            extType = "fonts";
-          } else if (/s?css/.test(extType)) {
-            extType = "css";
-          }
-          return `assets/${extType}/[name][extname]`;
-        },
-      },
-    },
+    // rollupOptions: {
+    //   input: {
+    //     about: "./src/common/css/html.scss",
+    //     ejs: "./src/common/css/ejs.scss",
+    //   },
+    //   output: {
+    //     chunkFileNames: "assets/js/[name].js",
+    //     entryFileNames: "assets/js/[name].js",
+    //     assetFileNames: (assetInfo) => {
+    //       let extType = assetInfo.name.split(".")[1];
+    //       console.log(assetInfo.name);
+    //       if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+    //         extType = "images";
+    //       } else if (/woff|woff2|eot|ttf/.test(extType)) {
+    //         extType = "fonts";
+    //       } else if (/s?css/.test(extType)) {
+    //         extType = "css";
+    //       }
+    //       return `assets/${extType}/[name][extname]`;
+    //     },
+    //   },
+    // },
   },
   // resolve: {
   //   alias: {
