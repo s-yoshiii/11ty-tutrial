@@ -1,12 +1,13 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import path from "path";
 import { eleventyPlugin } from "vite-plugin-eleventy";
 const glob = require("glob");
 const entries = glob.sync(["./src/**/*.scss"]);
 console.log(entries);
 export default defineConfig({
   root: "src",
-  publicDir: resolve(__dirname, "public"),
+  base: "./",
+  publicDir: path.resolve(__dirname, "public"),
   plugins: [eleventyPlugin()],
   server: {
     port: 3000,
@@ -16,28 +17,35 @@ export default defineConfig({
   build: {
     outDir: "../build",
     emptyOutDir: false,
-    // rollupOptions: {
-    //   input: {
-    //     about: "./src/common/css/html.scss",
-    //     ejs: "./src/common/css/ejs.scss",
-    //   },
-    //   output: {
-    //     chunkFileNames: "assets/js/[name].js",
-    //     entryFileNames: "assets/js/[name].js",
-    //     assetFileNames: (assetInfo) => {
-    //       let extType = assetInfo.name.split(".")[1];
-    //       console.log(assetInfo.name);
-    //       if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-    //         extType = "images";
-    //       } else if (/woff|woff2|eot|ttf/.test(extType)) {
-    //         extType = "fonts";
-    //       } else if (/s?css/.test(extType)) {
-    //         extType = "css";
-    //       }
-    //       return `assets/${extType}/[name][extname]`;
-    //     },
-    //   },
-    // },
+    rollupOptions: {
+      input: Object.fromEntries(
+        glob
+          .sync("{js,css}/**/*.{js,scss}", {
+            ignore: "**/_**/**/*.{js,scss}",
+            cwd: `./src`,
+          })
+          .map((file) => {
+            const { dir, name } = path.parse(file);
+            return [`${dir}/${name}`, path.resolve("src", file)];
+          })
+      ),
+      output: {
+        chunkFileNames: "assets/js/[name].js",
+        entryFileNames: "assets/js/[name].js",
+        assetFileNames: (assetInfo) => {
+          let extType = assetInfo.name.split(".")[1];
+          console.log(assetInfo.name);
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = "images";
+          } else if (/woff|woff2|eot|ttf/.test(extType)) {
+            extType = "fonts";
+          } else if (/s?css/.test(extType)) {
+            extType = "css";
+          }
+          return `assets/${extType}/[name][extname]`;
+        },
+      },
+    },
   },
   // resolve: {
   //   alias: {

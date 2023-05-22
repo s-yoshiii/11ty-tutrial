@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "watch:eleventy": "eleventy --serve",
+    "build:eleventy": "eleventy"
   },
   "dependencies": {
     "glob": "^10.2.5",
